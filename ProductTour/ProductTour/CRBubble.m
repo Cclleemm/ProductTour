@@ -46,6 +46,7 @@
     [titleLabel setAlpha:0.6];
     [titleLabel setFont:[UIFont fontWithName:@"BebasNeue" size:CR_TITLE_FONT_SIZE]];
     [titleLabel setText:title];
+    [titleLabel setBackgroundColor:[UIColor clearColor]];
     [self addSubview:titleLabel];
     
     
@@ -63,6 +64,7 @@
         [descriptionLabel setTextColor:COLOR_DARK_GRAY];
         [descriptionLabel setFont:[UIFont systemFontOfSize:CR_DESCRIPTION_FONT_SIZE]];
         [descriptionLabel setText:descriptionLine];
+        [descriptionLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:descriptionLabel];
         
     }
