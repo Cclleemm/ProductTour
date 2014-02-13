@@ -10,7 +10,7 @@ Example
 Integration
 ============
 ```
-CRProductTour *productTourView = [[CRProductTour alloc] initWithFrame:self.view.frame] ;
+productTourView = [[CRProductTour alloc] initWithFrame:self.view.frame] ;
 
 //Setup your bubbles
 CRBubble *bubbleButton1 = [[CRBubble alloc] initWithAttachedView:_button1 title:@"My Title" description:@"A smal description" arrowPosition:CRArrowPositionBottom andColor:[UIColor redColor]];

@@ -116,8 +116,8 @@
     height-=CR_DESCRIPTION_FONT_SIZE;
     float descriptionWidth=0;
     for (NSString *descriptionLine in  stringArray) {
-        if(descriptionWidth<[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.2)
-            descriptionWidth=[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.2;
+        if(descriptionWidth<[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.1)
+            descriptionWidth=[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.1;
         height+=CR_DESCRIPTION_FONT_SIZE;
     }
     
