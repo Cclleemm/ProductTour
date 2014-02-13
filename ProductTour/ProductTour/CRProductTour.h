@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface CRProductTour : UIView
-{
-    NSMutableArray *bubbleArray;
-}
 
+@property (nonatomic, strong)  NSMutableArray *bubblesArray;
+-(void)setBubbles:(NSMutableArray*)arrayOfBubbles;
+-(void)setVisible:(bool)visible;
+-(BOOL)isVisible;
 @end

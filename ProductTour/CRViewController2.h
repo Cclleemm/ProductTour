@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CRProductTour.h"
 
-@interface CRViewController : UIViewController
+@interface CRViewController2 : UIViewController
 {
     CRProductTour *productTourView;
 }
 @property (weak, nonatomic) IBOutlet UIButton *button1;
-@property (weak, nonatomic) IBOutlet UIButton *button2;
 @property (weak, nonatomic) IBOutlet UIButton *buttonHelp;
 @property (weak, nonatomic) IBOutlet UILabel *appTitle;
 - (IBAction)toogleHelpAction:(id)sender;

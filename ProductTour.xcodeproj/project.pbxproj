@@ -24,6 +24,7 @@
 		EB686E1818ABCB6800BC11E5 /* CRBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = EB686E1718ABCB6800BC11E5 /* CRBubble.m */; };
 		EB686E1C18ABCE7A00BC11E5 /* CRProductTour.m in Sources */ = {isa = PBXBuildFile; fileRef = EB686E1B18ABCE7A00BC11E5 /* CRProductTour.m */; };
 		EB686E1E18ABDBE500BC11E5 /* BebasNeue.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB686E1D18ABDB5900BC11E5 /* BebasNeue.otf */; };
+		EB686E2118ACE69E00BC11E5 /* CRViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = EB686E2018ACE69E00BC11E5 /* CRViewController2.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		EB686E1A18ABCE7A00BC11E5 /* CRProductTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRProductTour.h; path = ProductTour/CRProductTour.h; sourceTree = "<group>"; };
 		EB686E1B18ABCE7A00BC11E5 /* CRProductTour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRProductTour.m; path = ProductTour/CRProductTour.m; sourceTree = "<group>"; };
 		EB686E1D18ABDB5900BC11E5 /* BebasNeue.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeue.otf; sourceTree = "<group>"; };
+		EB686E1F18ACE69E00BC11E5 /* CRViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRViewController2.h; sourceTree = "<group>"; };
+		EB686E2018ACE69E00BC11E5 /* CRViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRViewController2.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,8 @@
 				EB686DF318ABCAA200BC11E5 /* Main.storyboard */,
 				EB686DF618ABCAA200BC11E5 /* CRViewController.h */,
 				EB686DF718ABCAA200BC11E5 /* CRViewController.m */,
+				EB686E1F18ACE69E00BC11E5 /* CRViewController2.h */,
+				EB686E2018ACE69E00BC11E5 /* CRViewController2.m */,
 				EB686DF918ABCAA200BC11E5 /* Images.xcassets */,
 				EB686DE818ABCAA200BC11E5 /* Supporting Files */,
 			);
@@ -276,6 +281,7 @@
 				EB686DF218ABCAA200BC11E5 /* CRAppDelegate.m in Sources */,
 				EB686E1818ABCB6800BC11E5 /* CRBubble.m in Sources */,
 				EB686DF818ABCAA200BC11E5 /* CRViewController.m in Sources */,
+				EB686E2118ACE69E00BC11E5 /* CRViewController2.m in Sources */,
 				EB686E1C18ABCE7A00BC11E5 /* CRProductTour.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,6 +491,7 @@
 				EB686E1218ABCAA200BC11E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB686E1318ABCAA200BC11E5 /* Build configuration list for PBXNativeTarget "ProductTourTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +500,7 @@
 				EB686E1518ABCAA200BC11E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -26,8 +26,8 @@ typedef enum {
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, assign) CRArrowPosition arrowPosition;
-
--(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)description andArrow:(CRArrowPosition)arrowPosition;
+@property (nonatomic, strong) UIColor *color;
+-(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)description arrowPosition:(CRArrowPosition)arrowPosition andColor:(UIColor*)color;
 -(CGSize)size;
 -(CGRect)frame;
 @end

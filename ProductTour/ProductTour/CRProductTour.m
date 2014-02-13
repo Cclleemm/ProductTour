@@ -10,36 +10,80 @@
 #import "CRBubble.h"
 
 @implementation CRProductTour
+static BOOL tourVisible=YES;
+static NSMutableArray *arrayOfAllocatedTours;
+
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        bubbleArray = [[NSMutableArray alloc] init];
-        UIView *attachedView = [[UIView alloc] initWithFrame:CGRectMake(150, 300, 40, 20)];
-        [attachedView setBackgroundColor:[UIColor darkGrayColor]];
-        [self addSubview:attachedView];
-        
-        CRBubble *bubble = [[CRBubble alloc] initWithAttachedView:attachedView title:@"1. Add Devices" description:@"Setup your show with all \nyour connected DMX devices" andArrow:CRArrowPositionBottom];
-        
-        [bubbleArray addObject:bubble];
+        self.bubblesArray = [[NSMutableArray alloc] init];
+        [self setBackgroundColor:[UIColor clearColor]];
+        [self setUserInteractionEnabled:NO];
         
     }
+    if(arrayOfAllocatedTours==nil)
+        arrayOfAllocatedTours = [[NSMutableArray alloc]init];
+    [arrayOfAllocatedTours addObject:self];
     return self;
 }
 
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+-(void)setBubbles:(NSMutableArray*)arrayOfBubbles
 {
+    self.bubblesArray=arrayOfBubbles;
     
-    for (CRBubble *bubble in bubbleArray)
+    
+    for (CRBubble *bubble in self.bubblesArray)
     {
+        if(bubble.attachedView!=nil)
+        {
         [self addSubview:bubble];
+        
+        if(!tourVisible)
+            [bubble setAlpha:0.0];
+        }
     }
-   
-   
+}
+
+-(void)setVisible:(bool)visible
+{
+    tourVisible=visible;
+    [self refreshBubblesVisibility];
+}
+
+-(BOOL)isVisible
+{
+    return tourVisible;
+}
+
+-(void) refreshBubblesVisibility
+{
+    for(CRProductTour *tour in arrayOfAllocatedTours)
+    {
+    for (CRBubble *bubble in tour.bubblesArray)
+    {
+        if(tourVisible)
+        {
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.3];
+            [bubble setAlpha:1.0];
+            [UIView commitAnimations];
+        }
+        else
+        {
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.3];
+            [bubble setAlpha:0.0];
+            [UIView commitAnimations];
+        }
+    }
+    }
+}
+
+-(void)dealloc
+{
+    [arrayOfAllocatedTours removeObject:self];
 }
 
 

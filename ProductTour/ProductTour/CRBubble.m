@@ -11,25 +11,29 @@
 #define CR_ARROW_SIZE 12
 #define CR_PADDING 8
 #define CR_RADIUS 6
-
+#define COLOR_GLUE_BLUE [UIColor colorWithRed:0.0 green:0.48 blue:1.0 alpha:1.0]
+#define COLOR_DARK_GRAY [UIColor colorWithWhite:0.13 alpha:1.0]
 #define CR_TITLE_FONT_SIZE 24
 #define CR_DESCRIPTION_FONT_SIZE 14
 
-#define SHOW_ZONE YES
+#define SHOW_ZONE NO
 
 @implementation CRBubble
 
--(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)description andArrow:(CRArrowPosition)arrowPosition
+-(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)description arrowPosition:(CRArrowPosition)arrowPosition andColor:(UIColor*)color
 {
     self = [super init];
     if(self)
     {
+        if(color!=nil)
+            self.color=color;
+        else
+            self.color=COLOR_GLUE_BLUE;
         self.attachedView = view;
         self.title = title;
         self.description = description;
         self.arrowPosition = arrowPosition;
-        
-        
+        [self setBackgroundColor:[UIColor clearColor]];
     }
     
     float actualXPosition = [self offsets].width+CR_PADDING;
@@ -38,7 +42,8 @@
     float actualHeight = CR_TITLE_FONT_SIZE;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
-    [titleLabel setTextColor:COLOR_DARK_BLUE];
+    [titleLabel setTextColor:[UIColor blackColor]];
+    [titleLabel setAlpha:0.6];
     [titleLabel setFont:[UIFont fontWithName:@"BebasNeue" size:CR_TITLE_FONT_SIZE]];
     [titleLabel setText:title];
     [self addSubview:titleLabel];
@@ -54,7 +59,7 @@
         actualWidth =self.frame.size.width;
         actualHeight =CR_DESCRIPTION_FONT_SIZE;
         
-        UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
+        UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight+CR_ARROW_SPACE)];
         [descriptionLabel setTextColor:COLOR_DARK_GRAY];
         [descriptionLabel setFont:[UIFont systemFontOfSize:CR_DESCRIPTION_FONT_SIZE]];
         [descriptionLabel setText:descriptionLine];
@@ -64,8 +69,9 @@
     
     if(SHOW_ZONE){
         UIView *myview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.attachedView.frame.size.width, self.attachedView.frame.size.height)];
-        [myview setBackgroundColor:COLOR_GLUE_BLUE];
-        [myview setAlpha:0.2];
+        [myview setBackgroundColor:self.color];
+        [myview setAlpha:0.3];
+        [myview setUserInteractionEnabled:NO];
         [self.attachedView addSubview:myview];
     }
     
@@ -110,8 +116,8 @@
     height-=CR_DESCRIPTION_FONT_SIZE;
     float descriptionWidth=0;
     for (NSString *descriptionLine in  stringArray) {
-        if(descriptionWidth<[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2)
-            descriptionWidth=[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2;
+        if(descriptionWidth<[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.2)
+            descriptionWidth=[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.2;
         height+=CR_DESCRIPTION_FONT_SIZE;
     }
     
@@ -120,9 +126,6 @@
     }else{
         width+=titleWidth;
     }
-    
-    
-    
     
     return CGSizeMake(width, height);
 }
@@ -143,19 +146,12 @@
     CGPathRef clippath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake([self offsets].width,[self offsets].height, [self size].width, [self size].height) cornerRadius:CR_RADIUS].CGPath;
     CGContextAddPath(ctx, clippath);
     
-    CGContextSetFillColorWithColor(ctx, COLOR_GLUE_BLUE.CGColor);
+    CGContextSetFillColorWithColor(ctx, self.color.CGColor);
     
     CGContextClosePath(ctx);
     CGContextFillPath(ctx);
     
-    
-    
-    
-    
-    [COLOR_GLUE_BLUE set];
-    
-    
-    
+    [self.color set];
     
     CGPoint startPoint = CGPointMake(0, CR_ARROW_SIZE);
     CGPoint thirdPoint = CGPointMake(CR_ARROW_SIZE/2, 0);
