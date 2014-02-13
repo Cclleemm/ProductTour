@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRBubble.h"
 
 @interface CRProductTour : UIView
 

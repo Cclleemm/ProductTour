@@ -8,8 +8,6 @@
 
 #import "CRViewController2.h"
 
-#import "CRBubble.h"
-
 @interface CRViewController2 ()
 
 @end

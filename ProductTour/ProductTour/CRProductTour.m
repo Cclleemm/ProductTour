@@ -7,7 +7,6 @@
 //
 
 #import "CRProductTour.h"
-#import "CRBubble.h"
 
 @implementation CRProductTour
 static BOOL tourVisible=YES;

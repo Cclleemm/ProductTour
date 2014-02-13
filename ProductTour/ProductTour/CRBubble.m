@@ -190,8 +190,6 @@
         [path applyTransform:trans];
     }
     
-    
-    
     [path closePath]; // Implicitly does a line between p4 and p1
     [path fill]; // If you want it filled, or...
     [path stroke]; // ...if you want to draw the outline.
