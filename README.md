@@ -30,4 +30,5 @@ Features
 *   Color, font size customization
 *   Different arrow directions
 *   Multi-line or mono-line for description
+*   Two differents animations for dismiss/appear bubbles (BOOL activeAnimation=YES; //YES for full animation, NO for fade animation)
 *   Integration example
