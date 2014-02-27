@@ -7,8 +7,6 @@
 //
 
 #import "CRBubble.h"
-#define CR_ARROW_SPACE 10
-#define CR_ARROW_SIZE 12
 #define CR_PADDING 8
 #define CR_RADIUS 6
 #define COLOR_GLUE_BLUE [UIColor colorWithRed:0.0 green:0.48 blue:1.0 alpha:1.0]

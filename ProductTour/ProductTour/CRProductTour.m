@@ -7,6 +7,8 @@
 //
 
 #import "CRProductTour.h"
+#define ANIMATION_TRANSLATION 30
+#define ANIMATION_DURATION 0.25
 
 @implementation CRProductTour
 static BOOL tourVisible=YES;
@@ -38,7 +40,6 @@ static NSMutableArray *arrayOfAllocatedTours;
         if(bubble.attachedView!=nil)
         {
         [self addSubview:bubble];
-        
         if(!tourVisible)
             [bubble setAlpha:0.0];
         }
@@ -56,6 +57,56 @@ static NSMutableArray *arrayOfAllocatedTours;
     return tourVisible;
 }
 
+-(void)makeDismissAnimation:(CRBubble*)bubble;
+{
+    CGAffineTransform moveTransform;
+    if(bubble.arrowPosition == CRArrowPositionRight)
+        moveTransform = CGAffineTransformMakeTranslation(+bubble.frame.size.width/2.0+CR_ARROW_SPACE+CR_ARROW_SIZE, -CR_ARROW_SIZE/2);
+    else if(bubble.arrowPosition == CRArrowPositionLeft)
+        moveTransform = CGAffineTransformMakeTranslation(-bubble.frame.size.width/2.0-(CR_ARROW_SPACE+CR_ARROW_SIZE), -CR_ARROW_SIZE/2);
+    else if(bubble.arrowPosition == CRArrowPositionBottom)
+        moveTransform = CGAffineTransformMakeTranslation(-CR_ARROW_SIZE/2, +bubble.frame.size.height/2.0+CR_ARROW_SPACE+CR_ARROW_SIZE);
+    else
+        moveTransform = CGAffineTransformMakeTranslation(-CR_ARROW_SIZE/2, -bubble.frame.size.height/2.0-(CR_ARROW_SPACE+CR_ARROW_SIZE));
+    
+    CGAffineTransform scaleTransform = CGAffineTransformScale(moveTransform, 0.1, 0.1);
+    
+    
+    
+    
+    [UIView animateWithDuration:ANIMATION_DURATION
+                          delay:0.0
+                        options:(UIViewAnimationCurveEaseInOut|UIViewAnimationOptionAllowUserInteraction)
+                     animations:^{
+                         bubble.transform = scaleTransform;
+                         [bubble setAlpha:0.0];
+                     }
+                     completion:^(BOOL finished){
+                         
+                         
+                         CABasicAnimation* scaleDown2 = [CABasicAnimation animationWithKeyPath:@"transform"];
+                         scaleDown2.duration = 0.2;
+                         scaleDown2.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.15, 1.15, 1.15)];
+                         scaleDown2.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1, 1, 1)];
+                         [bubble.attachedView.layer addAnimation:scaleDown2 forKey:nil];
+                     
+                     
+                     }];
+    
+    
+    
+    
+}
+
+-(void)makeAppearAnimation:(CRBubble*)bubble;
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:ANIMATION_DURATION];
+    bubble.transform=CGAffineTransformIdentity;
+    [bubble setAlpha:1.0];
+    [UIView commitAnimations];
+}
+
 -(void) refreshBubblesVisibility
 {
     for(CRProductTour *tour in arrayOfAllocatedTours)
@@ -64,17 +115,16 @@ static NSMutableArray *arrayOfAllocatedTours;
     {
         if(tourVisible)
         {
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.3];
-            [bubble setAlpha:1.0];
-            [UIView commitAnimations];
+            
+            [self makeAppearAnimation:bubble];
+            
+            
         }
         else
         {
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.3];
-            [bubble setAlpha:0.0];
-            [UIView commitAnimations];
+            
+            [self makeDismissAnimation:bubble];
+            
         }
     }
     }

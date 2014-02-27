@@ -7,11 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#define CR_ARROW_SPACE 10
+#define CR_ARROW_SIZE 12
 
 @interface CRBubble : UIView
 {
     NSArray *stringArray;
     int maxWidth;
+    CGPoint isMoving;
+    int swipeXPosition;
+    int swipeYPosition;
 }
 
 
