@@ -17,6 +17,8 @@
     CGPoint isMoving;
     int swipeXPosition;
     int swipeYPosition;
+    
+    UILabel *titleLabel;
 }
 
 
@@ -32,6 +34,7 @@ typedef enum {
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, assign) CRArrowPosition arrowPosition;
 @property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) NSString *fontName;
 -(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)description arrowPosition:(CRArrowPosition)arrowPosition andColor:(UIColor*)color;
 -(CGSize)size;
 -(CGRect)frame;

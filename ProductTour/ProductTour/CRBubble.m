@@ -17,6 +17,10 @@
 #define SHOW_ZONE NO
 
 @implementation CRBubble
+@synthesize fontName;
+
+#pragma mark - Constructor
+
 
 -(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)description arrowPosition:(CRArrowPosition)arrowPosition andColor:(UIColor*)color
 {
@@ -32,6 +36,8 @@
         self.description = description;
         self.arrowPosition = arrowPosition;
         [self setBackgroundColor:[UIColor clearColor]];
+        if(fontName==NULL)
+            fontName=@"BebasNeue";
     }
     
     float actualXPosition = [self offsets].width+CR_PADDING;
@@ -39,10 +45,10 @@
     float actualWidth =self.frame.size.width;
     float actualHeight = CR_TITLE_FONT_SIZE;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
     [titleLabel setTextColor:[UIColor blackColor]];
     [titleLabel setAlpha:0.6];
-    [titleLabel setFont:[UIFont fontWithName:@"BebasNeue" size:CR_TITLE_FONT_SIZE]];
+    [titleLabel setFont:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE]];
     [titleLabel setText:title];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
     [self addSubview:titleLabel];
@@ -80,6 +86,20 @@
     return self;
 }
 
+
+#pragma mark - Customs methods
+
+
+-(void)setFontName:(NSString *)theFontName
+{
+    fontName=theFontName;
+    [titleLabel setFont:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE]];
+    
+}
+
+#pragma mark - Drawing methods
+
+
 -(CGRect)frame
 {
     //Calculation of the bubble position
@@ -106,7 +126,7 @@
     float height = CR_PADDING*3;
     float width = CR_PADDING*3;
     
-    float titleWidth = [self.title length]*CR_TITLE_FONT_SIZE/3;
+    float titleWidth = [self.title length]*CR_TITLE_FONT_SIZE/2.5;
     
     if(self.title && ![self.title isEqual:@""])
     {
