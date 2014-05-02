@@ -45,21 +45,26 @@
     float actualWidth =self.frame.size.width;
     float actualHeight = CR_TITLE_FONT_SIZE;
     
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
-    [titleLabel setTextColor:[UIColor blackColor]];
-    [titleLabel setAlpha:0.6];
-    [titleLabel setFont:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE]];
-    [titleLabel setText:title];
-    [titleLabel setBackgroundColor:[UIColor clearColor]];
-    [self addSubview:titleLabel];
+    if (self.title && ![self.title isEqualToString:@""]) {
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
+        [titleLabel setTextColor:[UIColor blackColor]];
+        [titleLabel setAlpha:0.6];
+        [titleLabel setFont:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE]];
+        [titleLabel setText:title];
+        [titleLabel setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:titleLabel];
+    }
     
+    if (!self.title || [self.title isEqualToString:@""])
+        actualYPosition = [self offsets].height;
     
     
     stringArray=[self.description componentsSeparatedByString:@"\n"];
     
     for (NSString *descriptionLine in stringArray) {
         
-        actualYPosition+=actualHeight;
+        if (self.title && ![self.title isEqualToString:@""])
+            actualYPosition+=actualHeight;
         
         actualWidth =self.frame.size.width;
         actualHeight =CR_DESCRIPTION_FONT_SIZE;
@@ -70,6 +75,9 @@
         [descriptionLabel setText:descriptionLine];
         [descriptionLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:descriptionLabel];
+        
+        if (!self.title || [self.title isEqualToString:@""])
+            actualYPosition+=actualHeight;
         
     }
     
