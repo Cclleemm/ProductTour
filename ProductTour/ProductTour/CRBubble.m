@@ -147,7 +147,11 @@
     float height = CR_PADDING*3;
     float width = CR_PADDING*3;
     
-    float titleWidth = [self.title length]*CR_TITLE_FONT_SIZE/2.5;
+    CGRect stringRect = [self.title boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, CR_TITLE_FONT_SIZE)
+                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                              attributes:@{ NSFontAttributeName:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE] }
+                                                 context:nil];
+    float titleWidth = stringRect.size.width;
     
     if(self.title && ![self.title isEqual:@""])
     {
@@ -157,8 +161,13 @@
     height-=CR_DESCRIPTION_FONT_SIZE;
     float descriptionWidth=0;
     for (NSString *descriptionLine in  stringArray) {
-        if(descriptionWidth<[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.1)
-            descriptionWidth=[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.1;
+        CGRect stringRect = [descriptionLine boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, CR_DESCRIPTION_FONT_SIZE)
+                                                          options:NSStringDrawingUsesLineFragmentOrigin
+                                                       attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:CR_DESCRIPTION_FONT_SIZE] }
+                                                          context:nil];
+        float stringWidth = stringRect.size.width;
+        if (descriptionWidth < stringWidth)
+            descriptionWidth = stringWidth;
         height+=CR_DESCRIPTION_FONT_SIZE;
     }
     
