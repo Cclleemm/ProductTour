@@ -45,21 +45,26 @@
     float actualWidth =self.frame.size.width;
     float actualHeight = CR_TITLE_FONT_SIZE;
     
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
-    [titleLabel setTextColor:[UIColor blackColor]];
-    [titleLabel setAlpha:0.6];
-    [titleLabel setFont:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE]];
-    [titleLabel setText:title];
-    [titleLabel setBackgroundColor:[UIColor clearColor]];
-    [self addSubview:titleLabel];
+    if (self.title && ![self.title isEqualToString:@""]) {
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
+        [titleLabel setTextColor:[UIColor blackColor]];
+        [titleLabel setAlpha:0.6];
+        [titleLabel setFont:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE]];
+        [titleLabel setText:title];
+        [titleLabel setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:titleLabel];
+    }
     
+    if (!self.title || [self.title isEqualToString:@""])
+        actualYPosition = [self offsets].height;
     
     
     stringArray=[self.description componentsSeparatedByString:@"\n"];
     
     for (NSString *descriptionLine in stringArray) {
         
-        actualYPosition+=actualHeight;
+        if (self.title && ![self.title isEqualToString:@""])
+            actualYPosition+=actualHeight;
         
         actualWidth =self.frame.size.width;
         actualHeight =CR_DESCRIPTION_FONT_SIZE;
@@ -70,6 +75,9 @@
         [descriptionLabel setText:descriptionLine];
         [descriptionLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:descriptionLabel];
+        
+        if (!self.title || [self.title isEqualToString:@""])
+            actualYPosition+=actualHeight;
         
     }
     
@@ -117,7 +125,20 @@
         y+=(self.arrowPosition==CRArrowPositionTop)? CR_ARROW_SPACE+self.attachedView.frame.size.height : -(CR_ARROW_SPACE*2+[self size].height);
     }
     
-    return CGRectMake(x, y, [self size].width+CR_ARROW_SIZE, [self size].height+CR_ARROW_SIZE);
+    float width = [self size].width+CR_ARROW_SIZE;
+    float height = [self size].height+CR_ARROW_SIZE;
+    
+    if (x + width > [[UIScreen mainScreen] bounds].size.width && width < [[UIScreen mainScreen] bounds].size.width)
+        x = [[UIScreen mainScreen] bounds].size.width - width;
+    else if (x < 0)
+        x = 0;
+    
+    if (y > [[UIScreen mainScreen] bounds].size.height && height < [[UIScreen mainScreen] bounds].size.height)
+        y = [[UIScreen mainScreen] bounds].size.height - height;
+    else if (y < 0)
+        y = 0;
+    
+    return CGRectMake(x, y, width, height);
 }
 
 -(CGSize)size
@@ -126,7 +147,17 @@
     float height = CR_PADDING*3;
     float width = CR_PADDING*3;
     
-    float titleWidth = [self.title length]*CR_TITLE_FONT_SIZE/2.5;
+    float titleWidth = 0;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        CGRect stringRect = [self.title boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, CR_TITLE_FONT_SIZE)
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                  attributes:@{ NSFontAttributeName:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE] }
+                                                     context:nil];
+        titleWidth = stringRect.size.width;
+    }
+    else {
+        titleWidth = [self.title length]*CR_TITLE_FONT_SIZE/2.5;
+    }
     
     if(self.title && ![self.title isEqual:@""])
     {
@@ -136,8 +167,21 @@
     height-=CR_DESCRIPTION_FONT_SIZE;
     float descriptionWidth=0;
     for (NSString *descriptionLine in  stringArray) {
-        if(descriptionWidth<[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.1)
-            descriptionWidth=[descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.1;
+        
+        float stringWidth = 0;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            CGRect stringRect = [descriptionLine boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, CR_DESCRIPTION_FONT_SIZE)
+                                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                                           attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:CR_DESCRIPTION_FONT_SIZE] }
+                                                              context:nil];
+            stringWidth = stringRect.size.width;
+        }
+        else {
+            stringWidth = [descriptionLine length]*CR_DESCRIPTION_FONT_SIZE/2.1;
+        }
+        
+        if (descriptionWidth < stringWidth)
+            descriptionWidth = stringWidth;
         height+=CR_DESCRIPTION_FONT_SIZE;
     }
     
@@ -188,24 +232,28 @@
     
     if(self.arrowPosition==CRArrowPositionTop)
     {
-        CGAffineTransform trans = CGAffineTransformMakeTranslation([self size].width/2-(CR_ARROW_SIZE)/2, 0);
+        float xPosition = CGRectGetMidX(self.attachedView.frame) - CGRectGetMinX(self.frame) -(CR_ARROW_SIZE)/2;
+        CGAffineTransform trans = CGAffineTransformMakeTranslation(xPosition, 0);
         [path applyTransform:trans];
     }else if(self.arrowPosition==CRArrowPositionBottom)
     {
+        float xPosition = CGRectGetMidX(self.attachedView.frame) - CGRectGetMinX(self.frame) -(CR_ARROW_SIZE)/2;
         CGAffineTransform rot = CGAffineTransformMakeRotation(M_PI);
-        CGAffineTransform trans = CGAffineTransformMakeTranslation([self size].width/2+(CR_ARROW_SIZE)/2, [self size].height+CR_ARROW_SIZE);
+        CGAffineTransform trans = CGAffineTransformMakeTranslation(xPosition, [self size].height+CR_ARROW_SIZE);
         [path applyTransform:rot];
         [path applyTransform:trans];
     }else if(self.arrowPosition==CRArrowPositionLeft)
     {
+        float yPosition = CGRectGetMidY(self.attachedView.frame) - CGRectGetMinY(self.frame) -(CR_ARROW_SIZE)/2;
         CGAffineTransform rot = CGAffineTransformMakeRotation(M_PI*1.5);
-        CGAffineTransform trans = CGAffineTransformMakeTranslation(0, ([self size].height+CR_ARROW_SIZE)/2);
+        CGAffineTransform trans = CGAffineTransformMakeTranslation(0, yPosition);
         [path applyTransform:rot];
         [path applyTransform:trans];
     }else if(self.arrowPosition==CRArrowPositionRight)
     {
+        float yPosition = CGRectGetMidY(self.attachedView.frame) - CGRectGetMinY(self.frame) -(CR_ARROW_SIZE)/2;
         CGAffineTransform rot = CGAffineTransformMakeRotation(M_PI*0.5);
-        CGAffineTransform trans = CGAffineTransformMakeTranslation([self size].width+CR_ARROW_SIZE, ([self size].height-CR_ARROW_SIZE)/2);
+        CGAffineTransform trans = CGAffineTransformMakeTranslation([self size].width+CR_ARROW_SIZE, yPosition);
         [path applyTransform:rot];
         [path applyTransform:trans];
     }
