@@ -237,14 +237,14 @@
         [path applyTransform:trans];
     }else if(self.arrowPosition==CRArrowPositionBottom)
     {
-        float xPosition = CGRectGetMidX(self.attachedView.frame) - CGRectGetMinX(self.frame) -(CR_ARROW_SIZE)/2;
+        float xPosition = CGRectGetMidX(self.attachedView.frame) - CGRectGetMinX(self.frame) +(CR_ARROW_SIZE)/2;
         CGAffineTransform rot = CGAffineTransformMakeRotation(M_PI);
         CGAffineTransform trans = CGAffineTransformMakeTranslation(xPosition, [self size].height+CR_ARROW_SIZE);
         [path applyTransform:rot];
         [path applyTransform:trans];
     }else if(self.arrowPosition==CRArrowPositionLeft)
     {
-        float yPosition = CGRectGetMidY(self.attachedView.frame) - CGRectGetMinY(self.frame) -(CR_ARROW_SIZE)/2;
+        float yPosition = CGRectGetMidY(self.attachedView.frame) - CGRectGetMinY(self.frame) +(CR_ARROW_SIZE)/2;
         CGAffineTransform rot = CGAffineTransformMakeRotation(M_PI*1.5);
         CGAffineTransform trans = CGAffineTransformMakeTranslation(0, yPosition);
         [path applyTransform:rot];
