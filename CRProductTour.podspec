@@ -74,9 +74,9 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
   
-  s.author             = { "Clément Raussin" => "clement@raussin.com" }
-  # Or just: s.author    = "Clément Raussin"
-  # s.authors            = { "Clément Raussin" => "clement@raussin.com" }
+  s.author             = { "Clément Raussin" => "clement@raussin.com" }
+  # Or just: s.author    = "Clément Raussin"
+  # s.authors            = { "Clément Raussin" => "clement@raussin.com" }
   # s.social_media_url   = "http://twitter.com/Cclleemm"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -111,8 +111,8 @@ s.source       = { :git => "https://github.com/Cclleemm/ProductTour.git", :tag =
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Classes", "Classes/**/*.{h,m}"
-  s.exclude_files = "Classes/Exclude"
+  s.source_files  = "ProductTour/ProductTour", "ProductTour/ProductTour/**/*.{h,m}"
+  s.exclude_files = "ProductTour/ProductTour/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
 
