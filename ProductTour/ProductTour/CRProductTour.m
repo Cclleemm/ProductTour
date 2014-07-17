@@ -23,11 +23,11 @@ static NSMutableArray *arrayOfAllocatedTours;
         self.bubblesArray = [[NSMutableArray alloc] init];
         [self setBackgroundColor:[UIColor clearColor]];
         [self setUserInteractionEnabled:NO];
-        
-    }
-    if(arrayOfAllocatedTours==nil)
+        if(arrayOfAllocatedTours==nil)
         arrayOfAllocatedTours = [[NSMutableArray alloc]init];
-    [arrayOfAllocatedTours addObject:self];
+        [arrayOfAllocatedTours addObject:self];
+    }
+    
     return self;
 }
 
