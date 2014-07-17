@@ -38,59 +38,60 @@
         [self setBackgroundColor:[UIColor clearColor]];
         if(fontName==NULL)
             fontName=@"BebasNeue";
-    }
-    
-    float actualXPosition = [self offsets].width+CR_PADDING;
-    float actualYPosition = [self offsets].height+CR_PADDING;
-    float actualWidth =self.frame.size.width;
-    float actualHeight = CR_TITLE_FONT_SIZE;
-    
-    if (self.title && ![self.title isEqualToString:@""]) {
-        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
-        [titleLabel setTextColor:[UIColor blackColor]];
-        [titleLabel setAlpha:0.6];
-        [titleLabel setFont:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE]];
-        [titleLabel setText:title];
-        [titleLabel setBackgroundColor:[UIColor clearColor]];
-        [self addSubview:titleLabel];
-    }
-    
-    if (!self.title || [self.title isEqualToString:@""])
-        actualYPosition = [self offsets].height;
-    
-    
-    stringArray=[self.description componentsSeparatedByString:@"\n"];
-    
-    for (NSString *descriptionLine in stringArray) {
+            
+        float actualXPosition = [self offsets].width+CR_PADDING;
+        float actualYPosition = [self offsets].height+CR_PADDING;
+        float actualWidth =self.frame.size.width;
+        float actualHeight = CR_TITLE_FONT_SIZE;
         
-        if (self.title && ![self.title isEqualToString:@""])
-            actualYPosition+=actualHeight;
-        
-        actualWidth =self.frame.size.width;
-        actualHeight =CR_DESCRIPTION_FONT_SIZE;
-        
-        UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight+CR_ARROW_SPACE)];
-        [descriptionLabel setTextColor:COLOR_DARK_GRAY];
-        [descriptionLabel setFont:[UIFont systemFontOfSize:CR_DESCRIPTION_FONT_SIZE]];
-        [descriptionLabel setText:descriptionLine];
-        [descriptionLabel setBackgroundColor:[UIColor clearColor]];
-        [self addSubview:descriptionLabel];
+        if (self.title && ![self.title isEqualToString:@""]) {
+            titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight)];
+            [titleLabel setTextColor:[UIColor blackColor]];
+            [titleLabel setAlpha:0.6];
+            [titleLabel setFont:[UIFont fontWithName:fontName size:CR_TITLE_FONT_SIZE]];
+            [titleLabel setText:title];
+            [titleLabel setBackgroundColor:[UIColor clearColor]];
+            [self addSubview:titleLabel];
+        }
         
         if (!self.title || [self.title isEqualToString:@""])
-            actualYPosition+=actualHeight;
+            actualYPosition = [self offsets].height;
         
+        stringArray=[self.description componentsSeparatedByString:@"\n"];
+        
+        for (NSString *descriptionLine in stringArray) {
+            
+            if (self.title && ![self.title isEqualToString:@""])
+                actualYPosition+=actualHeight;
+            
+            actualWidth =self.frame.size.width;
+            actualHeight =CR_DESCRIPTION_FONT_SIZE;
+            
+            UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(actualXPosition, actualYPosition, actualWidth, actualHeight+CR_ARROW_SPACE)];
+            [descriptionLabel setTextColor:COLOR_DARK_GRAY];
+            [descriptionLabel setFont:[UIFont systemFontOfSize:CR_DESCRIPTION_FONT_SIZE]];
+            [descriptionLabel setText:descriptionLine];
+            [descriptionLabel setBackgroundColor:[UIColor clearColor]];
+            [self addSubview:descriptionLabel];
+            
+            if (!self.title || [self.title isEqualToString:@""])
+                actualYPosition+=actualHeight;
+            
+        }
+        
+        if(SHOW_ZONE){
+            UIView *myview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.attachedView.frame.size.width, self.attachedView.frame.size.height)];
+            [myview setBackgroundColor:self.color];
+            [myview setAlpha:0.3];
+            [myview setUserInteractionEnabled:NO];
+            [self.attachedView addSubview:myview];
+        }
+        
+        [self setFrame:[self frame]];
+        [self setNeedsDisplay];
     }
     
-    if(SHOW_ZONE){
-        UIView *myview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.attachedView.frame.size.width, self.attachedView.frame.size.height)];
-        [myview setBackgroundColor:self.color];
-        [myview setAlpha:0.3];
-        [myview setUserInteractionEnabled:NO];
-        [self.attachedView addSubview:myview];
-    }
     
-    [self setFrame:[self frame]];
-    [self setNeedsDisplay];
     return self;
 }
 
