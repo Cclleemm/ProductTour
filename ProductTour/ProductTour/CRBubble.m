@@ -22,7 +22,7 @@
 #pragma mark - Constructor
 
 
--(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)description arrowPosition:(CRArrowPosition)arrowPosition andColor:(UIColor*)color
+-(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)bubbleDescription arrowPosition:(CRArrowPosition)arrowPosition andColor:(UIColor*)color
 {
     self = [super init];
     if(self)
@@ -33,7 +33,7 @@
             self.color=COLOR_GLUE_BLUE;
         self.attachedView = view;
         self.title = title;
-        self.description = description;
+        self.bubbleDescription = bubbleDescription;
         self.arrowPosition = arrowPosition;
         [self setBackgroundColor:[UIColor clearColor]];
         if(fontName==NULL)
@@ -57,7 +57,7 @@
         if (!self.title || [self.title isEqualToString:@""])
             actualYPosition = [self offsets].height;
         
-        stringArray=[self.description componentsSeparatedByString:@"\n"];
+        stringArray=[self.bubbleDescription componentsSeparatedByString:@"\n"];
         
         for (NSString *descriptionLine in stringArray) {
             

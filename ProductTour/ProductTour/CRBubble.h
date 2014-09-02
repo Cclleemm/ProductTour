@@ -31,11 +31,11 @@ typedef enum {
 
 @property (nonatomic, strong) UIView *attachedView;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSString *bubbleDescription;
 @property (nonatomic, assign) CRArrowPosition arrowPosition;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, strong) NSString *fontName;
--(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)description arrowPosition:(CRArrowPosition)arrowPosition andColor:(UIColor*)color;
+-(id)initWithAttachedView:(UIView*)view title:(NSString*)title description:(NSString*)buubleDescription arrowPosition:(CRArrowPosition)arrowPosition andColor:(UIColor*)color;
 -(CGSize)size;
 -(CGRect)frame;
 @end
