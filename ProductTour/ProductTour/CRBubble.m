@@ -36,9 +36,11 @@
         self.bubbleDescription = bubbleDescription;
         self.arrowPosition = arrowPosition;
         [self setBackgroundColor:[UIColor clearColor]];
-        if(fontName==NULL)
-            fontName=@"BebasNeue";
-            
+        
+        if(!fontName) {
+            fontName= [[UIFont systemFontOfSize:12] fontName]; 
+        }
+
         float actualXPosition = [self offsets].width+CR_PADDING;
         float actualYPosition = [self offsets].height+CR_PADDING;
         float actualWidth =self.frame.size.width;
