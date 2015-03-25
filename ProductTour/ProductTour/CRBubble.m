@@ -113,19 +113,20 @@
 
 -(CGRect)frame
 {
+    CGRect attached_view_frame = [self.attachedView convertRect:self.attachedView.frame toView:self.superview];
     //Calculation of the bubble position
-    float x = self.attachedView.frame.origin.x;
-    float y = self.attachedView.frame.origin.y;
+    float x = attached_view_frame.origin.x;
+    float y = attached_view_frame.origin.y;
     
     if(self.arrowPosition==CRArrowPositionLeft||self.arrowPosition==CRArrowPositionRight)
     {
-        y+=self.attachedView.frame.size.height/2-[self size].height/2;
-        x+=(self.arrowPosition==CRArrowPositionLeft)? CR_ARROW_SPACE+self.attachedView.frame.size.width : -(CR_ARROW_SPACE*2+[self size].width);
+        y+=attached_view_frame.size.height/2-[self size].height/2;
+        x+=(self.arrowPosition==CRArrowPositionLeft)? CR_ARROW_SPACE+attached_view_frame.size.width : -(CR_ARROW_SPACE*2+[self size].width);
         
     }else if(self.arrowPosition==CRArrowPositionTop||self.arrowPosition==CRArrowPositionBottom)
     {
-        x+=self.attachedView.frame.size.width/2-[self size].width/2;
-        y+=(self.arrowPosition==CRArrowPositionTop)? CR_ARROW_SPACE+self.attachedView.frame.size.height : -(CR_ARROW_SPACE*2+[self size].height);
+        x+=attached_view_frame.size.width/2-[self size].width/2;
+        y+=(self.arrowPosition==CRArrowPositionTop)? CR_ARROW_SPACE+attached_view_frame.size.height : -(CR_ARROW_SPACE*2+[self size].height);
     }
     
     float width = [self size].width+CR_ARROW_SIZE;
@@ -205,6 +206,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    CGRect attached_view_frame = [self.attachedView convertRect:self.attachedView.frame toView:self.superview];
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
@@ -224,8 +226,6 @@
     CGPoint thirdPoint = CGPointMake(CR_ARROW_SIZE/2, 0);
     CGPoint endPoint = CGPointMake(CR_ARROW_SIZE, CR_ARROW_SIZE);
     
-    
-    
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:startPoint];
     [path addLineToPoint:endPoint];
@@ -235,31 +235,34 @@
     
     if(self.arrowPosition==CRArrowPositionTop)
     {
-        float xPosition = CGRectGetMidX(self.attachedView.frame) - CGRectGetMinX(self.frame) -(CR_ARROW_SIZE)/2;
+        float xPosition = CGRectGetMidX(attached_view_frame) - CGRectGetMinX(self.frame) -(CR_ARROW_SIZE)/2;
         CGAffineTransform trans = CGAffineTransformMakeTranslation(xPosition, 0);
         [path applyTransform:trans];
     }else if(self.arrowPosition==CRArrowPositionBottom)
     {
-        float xPosition = CGRectGetMidX(self.attachedView.frame) - CGRectGetMinX(self.frame) +(CR_ARROW_SIZE)/2;
+        float xPosition = CGRectGetMidX(attached_view_frame) - CGRectGetMinX(self.frame) +(CR_ARROW_SIZE)/2;
         CGAffineTransform rot = CGAffineTransformMakeRotation(M_PI);
         CGAffineTransform trans = CGAffineTransformMakeTranslation(xPosition, [self size].height+CR_ARROW_SIZE);
         [path applyTransform:rot];
         [path applyTransform:trans];
     }else if(self.arrowPosition==CRArrowPositionLeft)
     {
-        float yPosition = CGRectGetMidY(self.attachedView.frame) - CGRectGetMinY(self.frame) +(CR_ARROW_SIZE)/2;
+        float yPosition = CGRectGetMidY(attached_view_frame) - CGRectGetMinY(self.frame) +(CR_ARROW_SIZE)/2;
         CGAffineTransform rot = CGAffineTransformMakeRotation(M_PI*1.5);
         CGAffineTransform trans = CGAffineTransformMakeTranslation(0, yPosition);
         [path applyTransform:rot];
         [path applyTransform:trans];
     }else if(self.arrowPosition==CRArrowPositionRight)
     {
-        float yPosition = CGRectGetMidY(self.attachedView.frame) - CGRectGetMinY(self.frame) -(CR_ARROW_SIZE)/2;
+        float yPosition = CGRectGetMidY(attached_view_frame) - CGRectGetMinY(self.frame) -(CR_ARROW_SIZE)/2;
         CGAffineTransform rot = CGAffineTransformMakeRotation(M_PI*0.5);
         CGAffineTransform trans = CGAffineTransformMakeTranslation([self size].width+CR_ARROW_SIZE, yPosition);
         [path applyTransform:rot];
         [path applyTransform:trans];
     }
+    
+    
+    [path stroke];
     
     [path closePath]; // Implicitly does a line between p4 and p1
     [path fill]; // If you want it filled, or...
