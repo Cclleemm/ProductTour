@@ -113,7 +113,7 @@
 
 -(CGRect)frame
 {
-    CGRect attached_view_frame = [self.attachedView convertRect:self.attachedView.frame toView:self.superview];
+    CGRect attached_view_frame = [self.attachedView convertRect:self.attachedView.bounds toView:self.superview];
     //Calculation of the bubble position
     float x = attached_view_frame.origin.x;
     float y = attached_view_frame.origin.y;
@@ -206,7 +206,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGRect attached_view_frame = [self.attachedView convertRect:self.attachedView.frame toView:self.superview];
+    CGRect attached_view_frame = [self.attachedView convertRect:self.attachedView.bounds toView:self.superview];
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
