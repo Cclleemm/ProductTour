@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CRProductTour"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "A bubble tutorial to help the user understand your interface. (The same of Garaband help system)"
 
   s.description  = <<-DESC
